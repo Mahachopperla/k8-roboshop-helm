@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogue
+  namespace:  roboshop
+  labels:
+    component: catalogue
+    project: roboshop
+    tier: app
+spec:
+  replicas: {{ .Values.deployment.Spec.replicas }}
+  # These are the labels replica set use to create pod replicas, this should match pod labels
+  selector:
+    matchLabels:
+      component: catalogue
+      project: roboshop
+      tier: app
+  # this is pod definition
+  template:
+    metadata:
+      labels:
+        component: catalogue
+        project: roboshop
+        tier: app
+    spec:
+      containers:
+      - name: catalogue
+        image: "{{ .Values.deployment.Spec.imageURL }}:{{ .Values.deployment.Spec.imageVersion }}" # this image is already buld in docker and pushed to docker hub. we are using it here to run container.
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+        envFrom:
+        - configMapRef:
+            name: catalogue

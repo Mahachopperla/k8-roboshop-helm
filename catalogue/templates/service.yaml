@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalogue
+  namespace: roboshop # dont forget to mention this.
+  #labels in service are used to filter service based on labels . 
+  labels:
+    component: catalogue
+    project: roboshop
+    tier: app
+spec:
+  selector:
+    component: catalogue
+    project: roboshop
+    tier: app
+  ports:
+    - protocol: TCP
+      port: 8080 # this is source(service) port
+      targetPort: 8080 # container port

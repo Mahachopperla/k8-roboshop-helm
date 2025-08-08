@@ -1,0 +1,12 @@
+deployment:
+  Spec: 
+    replicas: 1
+    imageURL: maha110/catalogue
+    imageVersion: v1
+hpa:
+  maxReplicas: 10
+  utilisation: 75
+
+#{{ .Values.deployment.Spec.replicas }}
+# {{ .Values.hpa.maxReplicas }}
+# {{ .Values.hpa.utilisation }}

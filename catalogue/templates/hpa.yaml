@@ -1,0 +1,26 @@
+#backend components doesn't require statefulset , they need deployment only
+#but let's create autoscaling policy for backend application
+# 2 things need to check before going to create autoscaling policy
+# 1. make sure metrics server is running - there will be metrics server created automatically when u create a kubernates cluster
+# 			- to verify go to cluster in aws portal and - choose add-ons then u can see metrics server under add-ons
+# 		2. we should mention resources requests and limits in pods - so that pod can track the usage limits of metrics like cpu and memory	
+#     if these 2 checks are done then we can crete autoscaling policy for our backend applications
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: catalogue
+  namespace:  roboshop
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: catalogue
+  minReplicas: 1
+  maxReplicas: {{ .Values.hpa.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.hpa.utilisation }}

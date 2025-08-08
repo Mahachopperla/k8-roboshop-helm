@@ -1,0 +1,8 @@
+StatefulSet:
+  Spec: 
+    replicas: 1
+    imageURL: maha110/redis
+    imageVersion: v1
+
+
+#{{ .Values.StatefulSet.Spec.replicas }}

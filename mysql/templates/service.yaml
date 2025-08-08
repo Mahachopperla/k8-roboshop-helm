@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: roboshop # dont forget to mention this.
+  #labels in service are used to filter service based on labels . 
+  labels:
+    component: mysql
+    project: roboshop
+    tier: database
+spec:
+  selector:
+    component: mysql
+    project: roboshop
+    tier: database
+  ports:
+    - protocol: TCP
+      port: 3306 # this is source(service) port
+      targetPort: 3306 # container port

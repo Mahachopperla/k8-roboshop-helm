@@ -1,0 +1,9 @@
+#storage calss helps to dynamically create ebs volume in aws and also creates a physical representation(pv) of it in kuberantes
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: roboshop-ebs
+reclaimPolicy: Retain # if we want our data to be retained even if pod deleted then make sure u include this filed. otherwise defaultly it was set to delete
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer
